@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JITA</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css">
+    <!--<link rel="stylesheet" href="https://cdn.datatables.net/responsive/1.0.4/css/dataTables.responsive.css">-->
+    <!--<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">-->
+    <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <!--<link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>-->
+    <!--<link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>-->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css"
+          rel="stylesheet">
+    <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+    <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css">-->
+    <!--<link rel="stylesheet" href="/static/css/dashboard.css">-->
+    <!--<link rel="stylesheet" href="/static/css/style.css">-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>-->
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    <!--<script src="https://cdn.datatables.net/responsive/1.0.4/js/dataTables.responsive.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>-->
+
+
+</head>
+<style>
+      button.pressed {
+      background-color:#b3b3b3;
+      box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 50px 50px 0 rgba(0,0,0,0.19);
+      }
+      .topservice {
+      float: right;
+      }
+      .topequipment{
+      float: right;
+      }
+      .left{
+      float: left;
+      }
+      .dataTables_filter {
+      float: right !important;
+      }
+      .servicetitle {
+      float: left;
+      }
+      .equipmenttitle {
+      float: left;
+      }
+      .sidebuttons {
+      background-color: #F2F2F2;
+      border-radius: 4px;
+      border: none;
+      color: #262626;
+      padding: 8px 8px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 10px;
+      margin: 2px 2px;
+      width: 40;
+      height: 30px;
+      cursor: pointer;
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.4s;
+      }
+      .navbuttons {
+      box-shadow: 0 6px 6px 0 rgba(0,0,0,0.2), 0 6px 6px 0 rgba(0,0,0,0.19);
+      }
+      table.center-all td,th{
+      text-align :center;
+      }
+      #importance_service {
+      text-align: center;
+      }
+      #importance_equipment {
+      text-align: center;
+      }
+      .btn-circle {
+      width: 23px;
+      height: 23px;
+      text-align: center;
+      padding: 4px 0;
+      font-size: 10px;
+      line-height: 1.428571429;
+      border-radius: 15px;
+      }
+
+
+</style>
+<body>
+<div class="container-fluid " style="margin-left:10px;margin-right:10px;">
+    <div class="page-header">
+        <h2 style="color:#595959;" align="center">Service Monitor</h2>
+    </div>
+    <div class="row">
+        <div class="pull-left">
+            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"
+                    onclick="popup()" style='margin-left:15px;margin-right:15px;font-size:11px;'><span
+                    class="glyphicon glyphicon-plus" style="color:gray;"></span> Add Service/Equipment
+            </button>
+        </div>
+        <!--<button type="button" class="sidebuttons navbuttons navbuttons pull-right "-->
+        <!--style='margin-right:25px;font-size:12px;'>Breakdown-->
+        <!--</button>-->
+        <!--<button type="button" class="sidebuttons navbuttons navbuttons pull-right "-->
+        <!--style='margin-right:10px;font-size:12px;'>Shutdown-->
+        <!--</button>-->
+
+        <div class="dropdown pull-right" style="margin-right:15px;">
+            <button class="btn btn-primary dropdown-toggle dropdown-toggle-split btn-sm" type="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b>Data Center </b>
+                <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><a href="breakdown" style="font-size:11px;"><i class="fa fa-power-off fa-fw"></i> BreakDown</a></li>
+                <li class="divider"></li>
+                <li><a href="#" style="font-size:11px;"><i class="fa fa-power-off fa-fw"></i> ShutDown</a></li>
+            </ul>
+        </div>
+        <button type="button" class="btn btn-primary btn-sm pull-right" onclick="location.href='{% url 'register' %}'"
+                style='margin-left:15px;margin-right:10px;font-size:11px;'><b>Uptime Register</b>
+        </button>
+    </div>
+    <br/>
+    <br/>
+
+    <div class="modal fade" id="myModal" role="dialog" tabindex="-1" aria-hidden="true" style="border-radius:10px;">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content well well-sm">
+                <div class="modal-header" style="background-color:#f2f2f2;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel" align="center">Add Service</h4>
+                </div>
+                <form action="{% url 'add' %}" method="post" style="color:#595959;" data-toggle="validator"
+                      id="form_add" class="form-horizontal">
+                    {% csrf_token %}
+                    <br>
+                    <div class="modal-body" style="margin-left:30px; margin-right:30px;font-size:11px;">
+                        <div class="form-group row">
+                            <label for="inputesid" class="col-sm-5 col-form-label">Equipment/Service ID</label>
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control" id="inputesid" name="inputesid"
+                                       placeholder="" max="9999" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputshortname" class="col-sm-5 col-form-label">Short Name</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="inputshortname"
+                                       name="inputshortname" placeholder="" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputesname" class="col-sm-5 col-form-label">Equipment/Service
+                                Name</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="inputesname" name="inputesname"
+                                       placeholder="" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-5 col-form-label">Category</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" name="inputcategory" title="inputcategory">
+                                    <option value="Service" name="selectservice" id="selectservice">Service</option>
+                                    <option value="Equipment" name="selectequipment" id="selectequipment">Equipment
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputminor" class="col-sm-5 col-form-label">Minor Category</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" name="inputminor" id="inputminor">
+                                    {% for mcategory in minorcategory %}
+                                    <option value="{{mcategory}}">{{mcategory}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-5 col-form-label">Importance</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" name="inputimportance">
+                                    <option value="Critical" name="selectcritical" id="selectcritical">Critical</option>
+                                    <option value="Non Critical" name="selectnoncritical" id="selectnoncritical">Non
+                                        Critical
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputunits" class="col-sm-5 col-form-label">Units</label>
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control" id="inputunits" name="inputunits"
+                                       placeholder="" max="2" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-5 col-form-label">MIS</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" name="inputmis">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputplandowntime" class="col-sm-5 col-form-label">Plan Downtime</label>
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control" id="inputplandowntime"
+                                       name="inputplandowntime" placeholder="" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputexpectuptime" class="col-sm-5 col-form-label">Expect Uptime</label>
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control expecting" id="inputexpectuptime"
+                                       name="inputexpectuptime" placeholder="" value="{{expectuptime}}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputacceptuptime" class="col-sm-5 col-form-label">Accept Uptime</label>
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control" id="inputacceptuptime"
+                                       name="inputacceptuptime" placeholder="" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="modal-footer" style="margin-right:30px;">
+                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cancel</button>
+
+                         <input type="submit" class="submit btn btn-primary btn-sm" value="Add Service" id="addsubmit"
+                               name=submit>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- table left -->
+
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Service</div>
+                <div class="panel-body">
+                    <div class="table">
+                        <table id="service" class="table table-bordered center-all" cellspacing="0" width="100%">
+                            <thead style="background-color:#337AB7;">
+                            <tr style="color:white;font-size:11px;">
+                                <th>Status</th>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Minor Category</th>
+                                <th>Importance</th>
+                                <th>Uptime</th>
+                                <th>Downtime</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Equipment</div>
+                <div class="panel-body">
+                    <div class="table">
+                        <table id="equipment" class="table table-bordered center-all" cellspacing="0" width="100%">
+                            <thead style="background-color:#337AB7;">
+                            <tr style="color:white; font-size:11px;">
+                                <th>Status</th>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Minor Category</th>
+                                <th>Importance</th>
+                                <th>Uptime</th>
+                                <th>Downtime</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.16/datatables.min.js"></script>
+   <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+   <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.0/js/dataTables.buttons.min.js"></script>-->
+<script type="text/javascript">
+
+                  $(document).ready(function() {
+
+                   var servicetable = $('#service').DataTable({
+                    ajax:"/service",
+
+                     //"dom": '<"servicetitle"><"topservice"f>rtp',
+                     columns:[
+                     {data: 'status'},
+                     {data: 'esid'},
+                     {data: 'esname'},
+                     {data: 'minorcategory'},
+                     {data: 'importance'},
+                     {data: 'expectuptime'},
+                     {data: 'plandowntime'},
+                           ],
+
+
+
+                          columnDefs : [
+
+
+                          { targets : [0],
+                            render : function (data, type, row) {
+                              switch(data) {
+                                 case '\x01' : return '<a class="fa fa-circle" style="color:green"></a>'; break;
+                                 case '\x00' : return '<a class="fa fa-circle" style="color:red"></a>'; break;
+                              }
+                            }
+                          },
+
+                          { targets : [7],
+                            render : function (data, type, row) {console.log(row.status)
+                                if (row.status == '\x01') {
+                                   return '<a  class="btn btn-danger btn-circle btn-xs" href="stop/'+ row['esid'] +'/" style="color:white;"><i class="fa fa-stop"></i></a>';
+                                }
+                                else if (row.status == '\x00') {
+                                    return '<a  class="btn btn-success btn-circle btn-xs" href="start/'+ row['esid'] +'/" style="color:white;"><i class="fa fa-play"></i></a>';
+                                }
+                            }
+                          }
+                     ],
+
+                    });
+
+
+                    //$("div.servicetitle").html('<b>Service</b>');
+                   function popup(pk, Complete_Todo)
+                   {
+                       $('#myModal').on('shown.bs.modal', function () {
+                           $('#myInput').focus()
+                       })
+                   }
+
+                   $('#allequipment').on('click', function(){
+                   });
+
+});
+
+
+</script>
+
+
+<script type="text/javascript">
+
+         $(document).ready(function() {
+
+             var equipmenttable = $('#equipment').DataTable({
+                //"dom": '<"equipmenttitle"><"topequipment"f>rtp',
+                ajax:"/equipment",
+                     //"dom": '<"servicetitle"><"topservice"f>rtp',
+                     columns:[
+                     {data: 'status'},
+                     {data: 'esid'},
+                     {data: 'esname'},
+                     {data: 'minorcategory'},
+                     {data: 'importance'},
+                     {data: 'expectuptime'},
+                     {data: 'plandowntime'},
+
+                           ],
+
+                          columnDefs : [
+
+
+                          { targets : [0],
+                            render : function (data, type, row) {
+                              switch(data) {
+                                 case '\x01' : return '<a class="fa fa-circle" style="color:green"></a>'; break;
+                                 case '\x00' : return '<a class="fa fa-circle" style="color:red"></a>'; break;
+                              }
+                            }
+                          },
+
+
+                          { targets : [7],
+                            render : function (data, type, row) {
+
+                                if (row.status == '\x01') {
+                                   return '<a  class="btn btn-danger btn-circle btn-xs" href="stop/'+ row['esid'] +'/" style="color:white;"><i class="fa fa-stop"></i></a>';
+                                }
+                                else if (row.status == '\x00') {
+                                    return '<a  class="btn btn-success btn-circle btn-xs" href="start/'+ row['esid'] +'/" style="color:white;"><i class="fa fa-play"></i></a>';
+                                }
+                            }
+                          }
+                     ],
+                /*'language': {
+                  'search': '_INPUT_',
+                  'searchPlaceholder': 'Search...'
+                  }*/
+
+              });
+           });
+
+
+</script>
+<script type="text/javascript">
+         $(document).ready(function() {
+             //this calculates values automatically
+             calexpectuptime();
+             calacceptuptime();
+             $("#inputunits, #inputexpectuptime").on("keydown keyup", function() {
+                 calexpectuptime();
+             });
+
+             $("#inputexpectuptime, #inputplandowntime").on("keydown keyup", function() {
+                 calacceptuptime();
+             });
+         });
+
+         function calexpectuptime() {
+                     var inputunits = document.getElementById('inputunits').value;
+                     var inputexpectuptime = document.getElementById('inputexpectuptime').value;
+                     switch(inputunits) {
+
+                     case '1' :
+                        var result = 30720;
+                         if (!isNaN(result)) {
+                             document.getElementById('inputexpectuptime').value = result;
+                         }
+                         break;
+
+                     case '2':
+                        var result = 61440;
+                         if (!isNaN(result)) {
+                             document.getElementById('inputexpectuptime').value = result;
+                         }
+                         break;
+                     }
+
+                 }
+
+         function calacceptuptime() {
+                     var inputexpectuptime = document.getElementById('inputexpectuptime').value;
+                     var inputplandowntime = document.getElementById('inputplandowntime').value;
+                     var result = parseInt(inputexpectuptime) - parseInt(inputplandowntime);
+                     if (!isNaN(result)) {
+                         document.getElementById('inputacceptuptime').value = result;
+                     }
+         }
+
+
+</script>
+</body>
+</html>

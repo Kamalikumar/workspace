@@ -1,0 +1,128 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+
+<script>
+    var messages = [];
+      {% if messages %}
+      {% for message in messages %}
+        messages.push({'message':'{{message}}','tag':'{{message.tags}}'});
+      {% endfor %}
+      {% endif %}
+      $(document).ready(function() {
+        $.each( messages, function( index, message ){
+          $.notify(message.message, message.tag);
+        });
+      });
+</script>
+<form action="" method="POST">
+<body class="container">
+<h1 style="font-family:Times New Roman" align="center">Todo Application</h1><br>
+<br>
+<div class="container">
+
+{% if user.is_authenticated %}
+    <div class="Container">
+    <a style="color:#452121;,font-family:Times New Roman">  Welcome {{ user.username }}! </a><br><br>
+    <a  href="{% url 'todo' %}"><span class="glyphicon glyphicon-home"></span></a>
+    <a  class="btn btn-default btn-sm pull-right" href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> logout</a><br><br>
+
+    <a  class="btn btn-default btn-sm pull-right" href="{% url 'password' %}"><span class="glyphicon glyphicon-lock"></span> Change password </a><br><br>
+    </div>
+<div class="container">
+<div class="well form-group">
+    <div class="input-group">
+        <form action="/todo" method="get">
+        <input  class="col-lg-6" type="text" placeholder="Search here.." name="i_text"/><button class="btn btn-light " type="submit"><span class="glyphicon glyphicon-search"></span> Search</button>
+        </form>
+    </div>
+</div>
+</div>
+
+
+<div class="container">
+    <div class="well form-group ">
+<form action="/todo" method="post" id="validate" onsubmit="return submitForm(this);">{% csrf_token %}
+     <p> Enter your daily tasks:</p>
+    <input class="form-control " placeholder="Enter the task to Add-on" type="text" name="text" required  /><br>
+    <input class="btn btn-primary pull-right"type="submit" value="Submit" /><br><br>
+
+</form>
+    </div><br>
+</div>
+
+
+
+<div class="btn-group pull-right">
+<button class="btn btn-success" type="submit" onclick="location.href='{% url 'todo' %}?items=t_completed'">Completed</button>
+<button class="btn btn-danger"type="submit" onclick="location.href='{% url 'todo' %}?items=f_completed'" >Incompleted</button>
+<button class="btn btn-info" type="submit" onclick="location.href='{% url 'todo'  %}?items=items'" >View all</button>
+</div>
+<br>
+<br>
+
+<div class="container">
+    <div class="well form-group">
+{% for x in items %}
+
+    <ul class="list-group ">
+
+        <form action="/delete/{{x.id}}/" method="post">{% csrf_token %}
+        {% if x.errror %}
+        <p> {{ x.error }} </p>
+        {% endif %}
+        {% if x.is_completed == True %}
+          <li class="list-group-item list-group-item-light">  <a style="color:black;"> <span class="glyphicon glyphicon-tasks"></span>  {{x}} </a> <button class="btn btn-light" type="submit" >Trash <span class="glyphicon glyphicon-trash"></span> {{ model.mydate|date:"d/m/Y" }}</button></li>
+        {% else %}
+        <li class="list-group-item list-group-item-light"> <a style="color:black;"> <span class="glyphicon glyphicon-tasks"></span>  {{x}} </a>  <button class="btn btn-light" type="submit" onclick="myFunction({{x.id}})" >Trash <span class="glyphicon glyphicon-trash"></span></button></li>
+            <a id="{{x.id}}"></a><br>
+        {% endif %}
+        </form>
+
+
+        <form action="/update/{{x.id}}/" method="post">{% csrf_token %}
+            <a><input class="btn btn-link" align="left" type="submit" name="is_completed" value="update"/></a>
+            {% if x.is_completed == True %}
+                       <li class="list-group-item list-group-item-success">Task completed :-{{x}}</li><br><br>
+            {% else %}
+                      <li class="list-group-item list-group-item-danger"> Task pending :-{{x}}</li>
+            {% endif %}
+        </form>
+
+    </ul>
+{% endfor %}
+    </div>
+</div>
+
+<script>
+    //submit form
+   /* function submitForm() {
+    $('#validate').blur(function()
+    {
+        if( $(this).val().length === 0 ) {
+            $(this).parents('p').addClass('warning');
+        }
+    });
+
+    return confirm('Do you really want to save form?');
+    }*/
+</script>
+</div>
+
+
+<ul class="pager">
+    <li><a href="{% url 'index' %}">Previous</a></li>
+    <li><a href="{% url 'todo' %}">Next</a></li>
+  </ul>
+</body>
+
+
+           {% else %}
+            <h2> You are not logged in.</h2>
+            <a  class="btn btn-default btn-sm" href="{% url 'login' %}">  <span class="glyphicon glyphicon-log-in"></span> login </a>
+            {% endif %}
+

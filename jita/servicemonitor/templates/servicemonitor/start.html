@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>JITA</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <!--<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">-->
+    <!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">-->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="../../static/css/dashboard.css">
+     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+    <style>
+body {
+
+    background-color:white;
+}
+form { display: inline; }
+h1 {
+    color: navy blue;
+    text-align: center;
+}
+<span class="border border-info"></span>
+
+
+
+    </style>
+</head>
+<body>
+
+<div class="container-fluid" style="margin-left:100px;margin-right:100px;"><br>
+    <div class="row">
+        <div class="col-xs-6" style="margin-left:50px;margin-right:50px;">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="color:red; font-size:18px; margin-left:250px;margin-right:250px;">{{serviceList.esname}} Stopped</div><br>
+                <div class="panel-body">
+                    <div class="form-control">
+                    <form style="margin-left:150px;margin-right:150px;font-size:16px;" action="/started/{{serviceList.esid}}/" method="post" id="start">
+                        <div class="form-group row">
+                            <label for="inputENTRYID" class="col-sm-3 col-form-label">Entry Id</label>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-6">
+                                <input type="text" maxlength="4" value="{{serviceList.esid}}" class="form-control"
+                                       id="inputENTRYID"
+                                       placeholder="ENTRYID" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="startdate" class="col-sm-3 col-form-label">Start date</label>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="startdate" placeholder="startdate"
+                                       value="{{SmTrnregister.startdate}}" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputentryby" class="col-sm-3 col-form-label">Entry by</label>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-6">
+                                <input type="text" value="system" class="form-control" id="inputENTRYBY"
+                                       placeholder="ENTRYBY" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputcategory" class="col-sm-3 col-form-label">Category</label>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-6">
+                                <input type="text" value="{{serviceList.minorcategory}}" class="form-control"
+                                       id="inputcategory"
+                                       placeholder="service" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputimportance" class="col-sm-3 col-form-label">Importance</label>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-6">
+                                <input type="text" value="{{serviceList.importance}}" class="form-control"
+                                       id="inputimportance"
+                                       placeholder="critical" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputdescription" class="col-sm-3 col-form-label">Description</label>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-6">
+                                <input type="text" value="{{SmTrnregister.description}}" class="form-control"
+                                       id="inputdescription"
+                                       readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputdowntime" class="col-sm-3 col-form-label">Downtime</label>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-6">
+                                <input type="text" value="{{SmTrnregister.downtypetime}}" class="form-control"
+                                       id="inputdowntime" readonly>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="inputsource" class="col-sm-3 col-form-label">Source</label>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-6">
+                                <input type="text" value="{{SmTrnregister.source}}" class="form-control"
+                                       id="inputsource"
+                                       readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">MIS</label>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-6"><input type="text" value="{{SmTrnregister.mis}}" class="form-control"
+                                                         id="mis" readonly>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6" style="margin-left:50px;margin-right:50px;">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="color:green; font-size:18px; margin-left:230px;margin-right:230px;">{{serviceList.esname}} Started</div><br>
+            <div class="panel-body">
+                <div class="form-control">
+                <form style="margin-left:150px;margin-right:150px;font-size:16px;" data-toggle="validator"
+                      id="form_start" method="post" action="/started/{{serviceList.esid}}/">
+                    {%csrf_token%}
+                    <!--<input type="text" maxlength="4" value="{{serviceList.esid}}" class="form-control"-->
+                           <!--placeholder="entry" name="esid" readonly hidden>-->
+                    <div class="form-group row right">
+                        <label for="inputclosedby" class="col-sm-3 col-form-label">Closed by</label><div class="col-sm-1"></div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="inputclosedby" placeholder="system" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group row right">
+                        <label for="enddate" class="col-sm-3 col-form-label">End date</label><div class="col-sm-1"></div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="enddate" name="enddate" placeholder="date"
+                                   readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputrootcause" class="col-sm-3 col-form-label">Root cause<span style="color:red;"> *</span></label><div class="col-sm-1"></div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="inputrootcause"
+                                   name="rc"
+                                   required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputcorrectiveaction" class="col-sm-3 col-form-label">Corective action<span
+                                style="color:red;"> *</span></label><div class="col-sm-1"></div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="inputcorrectiveaction" name="ca" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputimpact" class="col-sm-3 col-form-label">Impact</label><div class="col-sm-1"></div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="inputimpact" name="impact"
+                                   value="{{impact_val}}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="totaldowntime" class="col-sm-3 col-form-label">Total downtime
+                            (Hours:Mins:Secs)</label><div class="col-sm-1"></div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="totaldowntime" name="downtime"
+                                   value="{{total_time}}" readonly>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group row pull-right">
+                        <button type="submit" class="btn btn-danger" onclick="location.href='http://127.0.0.1:8000/'"
+                                style="margin-right:10px;">Cancel
+                        </button>
+
+                        <a style="padding:10px;"></a>
+
+                        <button type="submit" class="btn btn-success" id="started" style="margin-right:120px;"> Submit
+                        </button>
+                    </div>
+                    <br><br>
+                </form>
+            </div>
+         </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready( function () {
+      $("#enddate").datepicker({ dateFormat: "dd-mm-yy" }).val()
+      $("#enddate").datepicker('setDate', 'today');
+      downtime();
+      total_downtime();
+      impact();
+});
+
+
+function total_downtime()
+      {
+          var tot_downtime = document.getElementById('totaldowntime').value;
+          p = tot_downtime.split(".")[0];
+          document.getElementById('totaldowntime').value = p
+      }
+
+function downtime()
+      {
+          var inputdowntime = document.getElementById('inputdowntime').value;
+          if (inputdowntime == "P")
+          {
+            document.getElementById('inputdowntime').value = "Planned";
+          }
+          if (inputdowntime == "U")
+          {
+            document.getElementById('inputdowntime').value = "Unplanned";
+          }
+      }
+
+      function impact()
+      {
+          var impact = document.getElementById('inputimpact').value;
+          if (impact >= 0 && impact <=659)
+          {
+            document.getElementById('inputimpact').value = "Low";
+          }
+          if (impact >= 660 && impact <=1800)
+          {
+            document.getElementById('inputimpact').value = "Medium";
+          }
+          if (impact > 1800)
+          {
+            document.getElementById('inputimpact').value = "High";
+          }
+      }
+
+
+</script>
+</body>
+</html>

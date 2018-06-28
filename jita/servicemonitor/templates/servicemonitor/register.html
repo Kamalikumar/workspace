@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css">
+    <!--<link rel="stylesheet" href="https://cdn.datatables.net/responsive/1.0.4/css/dataTables.responsive.css">-->
+    <!--<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">-->
+    <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <!--<link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>-->
+    <!--<link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>-->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css"
+          rel="stylesheet">
+    <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+    <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css">-->
+    <!--<link rel="stylesheet" href="/static/css/dashboard.css">-->
+    <!--<link rel="stylesheet" href="/static/css/style.css">-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>-->
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    <!--<script src="https://cdn.datatables.net/responsive/1.0.4/js/dataTables.responsive.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>-->
+
+</head>
+<style>
+    table.center-all td,th{
+      text-align :center;
+      }
+</style>
+<body>
+
+<div class="container-fluid " style="margin-left:10px;margin-right:10px;">
+    <div class="page-header">
+        <h2 style="color:#595959;" align="center"> Service Monitor</h2>
+        <h2 align="right" onclick="location.href='{% url 'home' %}'">
+        <span class="glyphicon glyphicon-home" style="color:gray;"></span>
+        </h2>
+    </div>
+
+
+ <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="color:black;"><span
+                    class="glyphicon glyphicon-bank" style="color:gray;"></span>Uptime Register</div>
+                <div class="panel-body">
+
+                    <div class="table">
+                        <table id="register" class="table table-bordered center-all" cellspacing="0" width="100%">
+                            <!--<div  id="servicetoggle" >-->
+                            <!--<button type="button" id="allservice" class=" btn btn-basic filter-btn pull-right"   style='color:#404040;margin-right:10px;font-family:Arial;font-size:12px;' >All</button>-->
+                            <!--<button type="button" id="misservice" class=" btn btn-basic filter-btn pull-right" data-filter=".Yes" style='color:#404040;font-family:Arial;margin-right:10px;font-size:12px;' >MIS</button>-->
+                            <!--<button type="button" id="criticalservice" class=" btn btn-basic filter-btn pull-right"data-filter=".Critical" style='color:#404040;font-family:Arial;margin-right:10px;font-size:12px;' >Critical</button>-->
+                            <!--</div><br><br><br>-->
+                            <thead style="background-color:#337AB7;">
+                            <tr style="color:white;font-size:11px;">
+                                <th>S.No</th>
+                                <th>Start Date</th>
+                                <th>Entry By</th>
+                                <th>ID</th>
+                                <th>Category</th>
+                                <th>Importance</th>
+                                <th>Description</th>
+                                <th>Downtime Type</th>
+                                <th>Source</th>
+                                <th>Impact</th>
+                                <th>End Date</th>
+                                <th>Downtime</th>
+                                <th>Close Mail sent</th>
+                                <th>Close By</th>
+                                <th>Root cause</th>
+                                <th>Corrective Action</th>
+                                <th>MIS</th>
+
+                            </tr>
+                        </thead>
+                             <tbody>
+
+                             </tbody>
+
+                    </table>
+                     </div>
+                    </div>
+                  </div>
+</div>
+     </div>
+    </div>
+
+                    <script type="text/javascript">
+                  $(document).ready(function() {
+                        var table = $('#register').DataTable({
+                        ajax:"/uptimeregister",
+                        columns: [
+                            { data: "entryid" },
+                            { data: "startdate" },
+                            { data: "entryby" },
+                            { data: "esid" },
+                            { data: "category" },
+                            { data: "importance" },
+                            { data: "description" },
+                            { data: "downtypetime" },
+                            { data: "source" },
+                            { data: "impact" },
+                            { data: "enddate" },
+                            { data: "downtime" },
+                            { data: "closemailsent" },
+                            { data: "closeby" },
+                            { data: "rc" },
+                            { data: "ca" },
+                            { data: "mis" },
+                        ],
+
+                        columnDefs : [
+
+                            <!--{ targets : [1],-->
+                            <!--render : function (data){-->
+                                <!--var get_startDate = new Date(data);-->
+                                <!--startdate = get_startDate.getDate() +  "-" + (get_startDate.getMonth() + 1) + "-" + get_startDate.getFullYear() + "   " +-->
+                                <!--(get_startDate.getHours() + 2) + ":" + (get_startDate.getMinutes() + 30) + ":" + get_startDate.getSeconds()l-->
+                                <!--return startdate;-->
+                                <!--}-->
+                          <!--},-->
+
+
+
+                           { targets : [4],
+                            render : function (data, type, row) {
+                            <!--console.log(row);-->
+                              switch(row.category) {
+                                 case 'S' : return 'Service'; break;
+                                 case 'E' : return 'Equipment'; break;
+                                                               }
+                            }
+                          },
+
+                          { targets : [7],
+                            render : function (data, type, row) {
+                              switch(row.downtypetime) {
+                                 case 'U' : return 'UnPlanned'; break;
+                                 case 'P' : return 'Planned'; break;
+                              }
+                            }
+                          },
+
+                           { targets : [9],
+                            render : function (data, type, row) {
+                              switch(row.impact) {
+                                 case 'L' : return 'Low'; break;
+                                 case 'M' : return 'Medium'; break;
+                                 case 'H' : return 'High'; break;
+                                 default : return '';
+                              }
+                            }
+                          },
+
+                          <!--{ targets : [10],-->
+                            <!--render : function (data, type, row){-->
+                               <!--var get_endDate = new Date(data);-->
+                                <!--enddate = get_endDate.getDate() +  "-" + (get_endDate.getMonth() + 1) + "-" + get_endDate.getFullYear() + "   " +-->
+                                <!--(get_endDate.getHours() + 2) + ":" + (get_endDate.getMinutes() + 30) + ":" + get_endDate.getSeconds()-->
+                                <!--return enddate;-->
+                                <!--}-->
+                          <!--},-->
+
+
+                          <!--{ targets : [16],-->
+                            <!--render : function (data, type, row) {-->
+                              <!--switch(row.mis) {-->
+                                 <!--case 'no' : return 'No'; break;-->
+                                 <!--case 'yes': return 'Yes'; break;-->
+                              <!--}-->
+                            <!--}-->
+                          <!--}-->
+                          ],
+
+
+                        /*"lengthChange": false,
+                        "bInfo": false,
+                        "bFilter": false,
+                        "paging": false, */
+                        });
+
+
+                    } );
+                    </script>
+</body>
+</html>
